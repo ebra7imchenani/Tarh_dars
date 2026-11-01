@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>پرامپت‌ساز طرح درس روزانه</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#0f1b4a;--bg2:#050a1f;--card:#0f1d4a;--head:#1b2a5c;--field:#060c26;
+  --line:#2a3a85;--text:#fff;--muted:#9aa6d6;--accent:#f5c531;--accent-ink:#1a1400;--gold:#c9a227;
+  color-scheme:dark;box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: light){
+  :root{--bg1:#eef2ff;--bg2:#dbe4ff;--card:#ffffff;--head:#e3e9ff;--field:#f6f8ff;--line:#9fb0ee;--text:#0f1b4a;--muted:#4b5a94;color-scheme:light}
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:Vazirmatn,Tahoma,sans-serif;color:var(--text);background:linear-gradient(180deg,var(--bg1),var(--bg2)) fixed;line-height:1.8;text-align:right}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+main{max-width:640px;margin:0 auto;padding:20px 14px 28px}
+h1{text-align:center;font-size:1.6rem;font-weight:800;margin:10px 0 6px}
+.lead{text-align:center;color:var(--muted);line-height:2.1;margin:0 0 16px;font-size:.95rem}
+.chips{display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:20px}
+.chip{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:999px;padding:6px 14px 6px 18px;font-size:.9rem;width:fit-content;max-width:100%}
+.chip b{flex:none;width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:800}
+.card{background:var(--card);border:2px dotted var(--gold);border-radius:22px;overflow:hidden;margin-bottom:18px}
+.card>header{background:var(--head);padding:12px 18px;display:flex;align-items:center;gap:10px}
+.card>header::before{content:"";width:5px;height:24px;border-radius:5px;background:var(--accent)}
+.card h2{margin:0;font-size:1.15rem;font-weight:800}
+.body{padding:16px 18px 18px}
+.f{margin-bottom:14px}
+label{display:block;font-weight:700;margin-bottom:6px}
+input,select,textarea{width:100%;font:inherit;color:var(--text);background:var(--field);border:2px solid var(--line);border-radius:16px;padding:10px 14px;text-align:right}
+textarea{resize:vertical;min-height:84px}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.prog{display:flex;align-items:center;gap:12px;margin:4px 0 14px;font-size:.85rem;color:var(--muted)}
+.bar{flex:1;height:8px;border-radius:8px;background:var(--field);border:1px solid var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
+.btns{display:flex;gap:10px}
+button{flex:1;font:inherit;font-weight:700;color:var(--text);background:transparent;border:3px solid var(--line);border-radius:16px;padding:10px 8px;cursor:pointer}
+button.main{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);width:100%}
+#out{min-height:260px;resize:vertical;line-height:1.9;font-size:.9rem}
+#msg{min-height:1.6em;margin:10px 0 0;text-align:center;color:var(--muted);font-size:.9rem}
+footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:8px}
+[hidden]{display:none!important}
+.code{direction:ltr;text-align:center;font-size:1.9rem;font-weight:800;letter-spacing:.18em;color:var(--accent);background:var(--field);border:2px dashed var(--gold);border-radius:16px;padding:12px 8px;margin:8px 0 12px;user-select:all}
+#act{direction:ltr;text-align:center;font-size:1.3rem;letter-spacing:.15em}
+.steps{margin:0 0 14px;padding:0 20px;color:var(--muted);font-size:.9rem;line-height:2}
+#gmsg{min-height:1.6em;margin:10px 0 0;text-align:center;font-size:.9rem;color:var(--muted)}
+#gmsg.err{color:#ff7b7b}
+</style>
+</head>
+<body>
+<main id="gate" hidden>
+  <h1>فعال‌سازی برنامه</h1>
+  <p class="lead">برای استفاده از «پرامپت‌ساز طرح درس روزانه» باید برنامه روی این دستگاه فعال شود.</p>
+  <section class="card">
+    <header><h2>کد دستگاه شما</h2></header>
+    <div class="body">
+      <ol class="steps">
+        <li>کد زیر را کپی کنید و برای ادمین بفرستید.</li>
+        <li>کد فعال‌سازی را که ادمین برایتان می‌فرستد در کادر پایین وارد کنید.</li>
+      </ol>
+      <div class="code" id="devCode" aria-label="کد دستگاه"></div>
+      <div class="btns">
+        <button type="button" id="btnDevCopy">کپی کد دستگاه</button>
+        <button type="button" id="btnShare">ارسال برای ادمین</button>
+      </div>
+      <div class="f" style="margin-top:16px"><label for="act">کد فعال‌سازی</label><input id="act" inputmode="numeric" autocomplete="off" placeholder="0000-0000"></div>
+      <button type="button" class="main" id="btnAct">فعال‌سازی</button>
+      <p id="gmsg" role="status"></p>
+    </div>
+  </section>
+  <footer>طراح: ابراهیم چنانی</footer>
+</main>
+
+<main id="app" hidden>
+  <h1>پرامپت‌ساز طرح درس روزانه</h1>
+  <p class="lead">مشخصات کلاس و درس را وارد کنید تا پرامپتی ساخته شود که هوش مصنوعی با آن، طرح درس روزانه را دقیقاً در قالب «فرم طرح درس روزانه» می‌نویسد و به‌صورت فایل HTML (قابل چاپ و ذخیره PDF) تحویل می‌دهد.</p>
+  <div class="chips">
+    <div class="chip"><b>۱</b>مشخصات را وارد کنید</div>
+    <div class="chip"><b>۲</b>پرامپت را کپی کنید</div>
+    <div class="chip"><b>۳</b>در هوش مصنوعی اجرا کنید و فایل HTML را بگیرید</div>
+  </div>
+
+  <section class="card">
+    <header><h2>مشخصات کلی</h2></header>
+    <div class="body">
+      <div class="f"><label for="teacher">نام مجری (معلم)</label><input id="teacher" placeholder="نام و نام خانوادگی معلم"></div>
+      <div class="f"><label for="school">نام مدرسه</label><input id="school" placeholder="نام دبستان"></div>
+      <div class="row">
+        <div class="f"><label for="num">شماره طرح درس</label><input id="num" inputmode="numeric" placeholder="مثلاً ۱"></div>
+        <div class="f"><label for="count">تعداد دانش‌آموزان</label><input id="count" inputmode="numeric" placeholder="مثلاً ۲۸"></div>
+      </div>
+      <div class="row">
+        <div class="f"><label for="grade">پایه</label>
+          <select id="grade"><option>اول</option><option>دوم</option><option>سوم</option><option>چهارم</option><option>پنجم</option><option selected>ششم</option></select></div>
+        <div class="f"><label for="date">تاریخ اجرا</label><input id="date" placeholder="مثلاً ۱۴۰۵/۰۸/۱۱"></div>
+      </div>
+      <div class="f"><label for="time">مدت اجرا</label><input id="time" placeholder="مثلاً ۴۵ دقیقه"></div>
+      <div class="f"><label for="lesson">نام درس</label><input id="lesson" placeholder="مثلاً ریاضی"></div>
+      <div class="f"><label for="topic">موضوع درس</label><input id="topic" placeholder="مثلاً تقارن"></div>
+      <div class="f"><label for="page">صفحات کتاب</label><input id="page" placeholder="مثلاً ۲۱ و ۲۲"></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <header><h2>شرایط کلاس و ترجیحات</h2></header>
+    <div class="body">
+      <div class="f"><label for="pre">پیش‌دانسته‌های دانش‌آموزان</label><textarea id="pre" placeholder="مثلاً با شکل‌های هندسی ساده آشنا هستند"></textarea></div>
+      <div class="f"><label for="tools">امکانات و ابزار موجود</label><textarea id="tools" placeholder="مثلاً کاغذ رنگی، قیچی، آینه، وایت‌بورد، ویدئوپروژکتور"></textarea></div>
+      <div class="f"><label for="layout">چیدمان کلاس (اختیاری)</label><input id="layout" placeholder="مثلاً گروه‌های ۴ نفره، نیم‌دایره"></div>
+      <div class="f"><label for="method">روش یا ملاحظات خاص تدریس</label><textarea id="method" placeholder="مثلاً فعالیت گروهی، بازی‌محور، کلاس شلوغ، بدون پروژکتور"></textarea></div>
+      <div class="row">
+        <div class="f"><label for="goals">تعداد اهداف جزیی و رفتاری</label>
+          <select id="goals"><option>۲</option><option selected>۳</option><option>۴</option></select></div>
+        <div class="f"><label for="q">تعداد سؤال ارزشیابی</label>
+          <select id="q"><option>۲</option><option selected>۳</option><option>۴</option></select></div>
+      </div>
+
+      <div class="prog"><span id="progText">۰ از ۷ مورد مشخصات تکمیل شده</span><div class="bar"><i id="progBar"></i></div></div>
+      <div class="btns">
+        <button type="button" id="btnSample">پر کردن با نمونه</button>
+        <button type="button" id="btnClear">پاک کردن فرم</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <header><h2>پرامپت آماده</h2></header>
+    <div class="body">
+      <textarea id="out" readonly aria-label="پرامپت ساخته‌شده"></textarea>
+      <div style="margin-top:12px"><button type="button" class="main" id="btnCopy">کپی پرامپت</button></div>
+      <p id="msg" role="status"></p>
+    </div>
+  </section>
+
+  <footer>طراح: ابراهیم چنانی</footer>
+</main>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var DOTS = "..........";
+  var UNKNOWN = "(مشخص نشده؛ یک فرض معقول انتخاب کن)";
+  var COUNT7 = ["teacher","school","count","lesson","topic","page","time"];
+  var TEXT = ["teacher","school","num","count","date","time","lesson","topic","page","pre","tools","layout","method"];
+  var ALL = TEXT.concat(["grade","goals","q"]);
+
+  function fa(n){ return String(n).replace(/\d/g, function(d){ return "۰۱۲۳۴۵۶۷۸۹"[d]; }); }
+  function val(id, fb){ var v = $(id).value.trim(); return v ? v : fb; }
+
+  function build(){
+    var teacher=val("teacher",DOTS), school=val("school",DOTS), num=val("num",DOTS), count=val("count",DOTS),
+        grade=val("grade",DOTS), date=val("date",DOTS), time=val("time",UNKNOWN), lesson=val("lesson",DOTS),
+        topic=val("topic",DOTS), page=val("page",DOTS), pre=val("pre",UNKNOWN), tools=val("tools",UNKNOWN),
+        layout=val("layout",UNKNOWN), method=val("method","فعالیت‌محور و مشارکتی"),
+        g=$("goals").value, q=$("q").value;
+
+    return `در نقش یک طراح آموزشی باتجربه در دوره ابتدایی، برای من یک «طرح درس روزانه» کامل و قابل اجرا در کلاس بنویس و آن را دقیقاً در قالب و ظاهر «فرم طرح درس روزانه» تحویل بده.
+
+مشخصات من و کلاس:
+- شماره طرح درس: ${num}
+- نام مجری (معلم): ${teacher}
+- نام مدرسه: ${school}
+- تعداد دانش‌آموزان: ${count}
+- پایه: ${grade}
+- رشته: عمومی (ابتدایی)
+- دوره تحصیلی: ابتدایی
+- تاریخ اجرا: ${date}
+- مدت اجرا: ${time}
+- نام درس: ${lesson}
+- موضوع درس: ${topic}
+- صفحات کتاب: ${page}
+- پیش‌دانسته‌های دانش‌آموزان: ${pre}
+- امکانات و ابزار موجود: ${tools}
+- چیدمان کلاس: ${layout}
+- روش یا ملاحظات خاص تدریس: ${method}
+
+محتوای فرم، دقیقاً به همین ترتیب و با همین عنوان‌ها:
+• سرتیتر وسط‌چین: «به نام خدا» و زیر آن «طرح درس روزانه».
+• جدول مشخصات کلی (۴ ستون، ۳ ردیف، با یک خانه‌ی عمودی «مشخصات کلی» در کنار آن). ردیف ۱: شماره طرح درس، پایه، نام مجری، نام درس. ردیف ۲: نام مدرسه، رشته، تاریخ اجرا، موضوع درس. ردیف ۳: تعداد دانش‌آموزان، دوره تحصیلی، مدت اجرا، صفحات. هر خانه «برچسب پررنگ: مقدار» باشد.
+• «هدف کلی:» یک جمله‌ی کلی و روشن.
+• «هدف‌های جزیی:» ${g} مورد، شماره‌دار.
+• «هدف‌های رفتاری: از دانش‌آموزان در پایان و یا در حین این جلسه تدریس انتظار می‌رود که بتوانند» ${g} مورد، شماره‌دار؛ هر مورد با فعل قابل مشاهده و سنجش (مثلاً بنویسد، توضیح دهد، رسم کند، مقایسه کند) و در حوزه‌های مختلف شناختی، مهارتی و نگرشی.
+• «رفتار ورودی (پیش‌دانسته‌ها): دانش‌آموزان قبل از تدریس این درس می‌توانند» ${g} مورد، شماره‌دار، بر اساس پیش‌دانسته‌های من.
+• «رئوس مطالب:» فهرست کوتاه مفاهیم اصلی درس.
+• «مواد و رسانه‌های آموزشی:» متناسب با امکانات من.
+• «چیدمان و طراحی کلاس درس:» شرح کوتاه چیدمان، متناسب با تعداد دانش‌آموزان و روش تدریس.
+• «الگوها و روش‌های یاددهی-یادگیری:» روش‌های مناسب (مثلاً یادگیری مشارکتی، پرسش و پاسخ، بحث گروهی، فعالیت دست‌ورزی، بازی).
+• بخش «مراحل تدریس (ارائه محتوا)» در یک جدول با ستون «زمان (دقیقه)» در کنار محتوا، شامل سه بخش:
+  الف) فعالیت‌های مقدماتی:
+    ۱- کارهای مقدماتی شامل: سلام و احوال‌پرسی، حضور و غیاب، بررسی وضع جسمانی و روانی دانش‌آموزان، مرتب نمودن فضای کلاس و ... (با زمان مشخص)
+    ۲- ارزشیابی ورودی (آزمون آغازین): جهت ارزشیابی رفتار ورودی دانش‌آموزان سؤالات زیر را می‌پرسیم: ${q} سؤال شماره‌دار.
+  ب) فعالیت‌های یاددهی-یادگیری: جدولی دو ستونه با عنوان ستون‌ها «فعالیت‌های فراگیران (تجارب یادگیری)» و «فعالیت‌های مدیر یادگیری (معلم)». هر ردیف یک گام تدریس است و در ستون زمان، دقیقه‌ی همان گام نوشته شود. فعالیت‌ها متنوع، گروهی یا دست‌ورزی و محور کار دانش‌آموزان باشند و هر ردیف، فعالیت دانش‌آموزان و کار هم‌زمان معلم را کنار هم نشان دهد.
+  ج) فعالیت‌های تکمیلی:
+    ۱- جمع‌بندی و نتیجه‌گیری: چند جمله.
+    ۲- ارزشیابی پایان درس یا تکمیلی: جهت ارزشیابی تکمیلی درس سؤالات زیر را از دانش‌آموزان می‌پرسیم: ${q} سؤال شماره‌دار.
+    ۳- تعیین تکلیف و موضوع جلسه آینده: ۱ تا ۲ تکلیف مناسب و نام موضوع جلسه بعد.
+    معرفی منابع جهت مطالعه دانش‌آموزان: کتاب درسی، کتاب راهنمای معلم و منابع مناسب دیگر.
+• جمع زمان‌های همه‌ی گام‌ها باید دقیقاً برابر مدت اجرا (${time}) باشد.
+
+قالب ظاهری خروجی: یک فایل HTML کامل و مستقل (dir="rtl"، فونت Vazirmatn با جایگزین Tahoma). فقط کد داخل یک بلوک کد، بدون توضیح قبل یا بعد.
+- صفحه A4 عمودی؛ اگر محتوا بلندتر شد به صفحه‌ی بعد برود (سطرهای جدول بین دو صفحه نشکنند: page-break-inside: avoid). به جای ارتفاع ثابت از min-height استفاده شود.
+- ظاهر مشابه فرم رسمی: همه‌ی بخش‌ها در جدول‌های ساده با خطوط مشکی نازک (border: 1px solid #000)، عنوان هر بخش پررنگ در ابتدای همان خانه، خانه‌ی «مشخصات کلی» و سرستون‌های جدول مراحل تدریس با پس‌زمینه‌ی خاکستری روشن (#e8e8e8).
+- متن‌ها راست‌چین؛ فقط دو خط سرتیتر وسط‌چین. فاصله‌ها باز و خلوت و اندازه‌ی قلم حدود ۱۱ تا ۱۲ پیکسل بزرگ‌تر از متن معمول برای خوانایی.
+- رنگ‌ها هنگام چاپ حفظ شوند (print-color-adjust: exact) و @page با size: A4 portrait و margin: 10mm تنظیم شود.
+- فقط یک دکمه‌ی ثابت بالای صفحه با عنوان «دریافت خروجی PDF» بیاور که با window.print() پنجره‌ی چاپ را باز کند تا کاربر «ذخیره به‌صورت PDF» را انتخاب کند؛ این دکمه با @media print پنهان شود. هیچ عنصر اضافه‌ی دیگری نیاور.
+
+نکات مهم:
+- زبان ساده و متناسب با سن دانش‌آموزان پایه‌ی ${grade}.
+- بخشی خارج از فرم (مقدمه یا نتیجه‌گیری) اضافه نکن و عنوان‌ها دقیقاً همان‌ها باشند.
+- اگر اطلاعاتی ناقص بود، فرض معقول انتخاب کن و در یک خط کوچک در انتهای فرم بنویس. در همان خط عبارت «طراح: ابراهیم چنانی» را هم بنویس.
+- اگر فایل یا تصویر «قالب خام طرح درس روزانه» پیوست شده بود، ظاهر و چیدمان را دقیقاً از روی آن بساز.`;
+  }
+
+  function update(){
+    var done = COUNT7.filter(function(id){ return $(id).value.trim() !== ""; }).length;
+    $("progText").textContent = fa(done) + " از ۷ مورد مشخصات تکمیل شده";
+    $("progBar").style.width = Math.round(done / 7 * 100) + "%";
+    $("out").value = build();
+  }
+
+  function sample(){
+    var d = {teacher:"نام معلم", school:"دبستان نمونه", num:"۱", count:"۲۶", grade:"ششم", date:"۱۴۰۵/۰۸/۱۱",
+      time:"۴۵ دقیقه", lesson:"ریاضی", topic:"تقارن", page:"۲۱",
+      pre:"با شکل‌های هندسی ساده آشنا هستند", tools:"کاغذ رنگی، قیچی، آینه، وایت‌بورد",
+      layout:"گروه‌های ۴ نفره", method:"فعالیت گروهی و دست‌ورزی"};
+    Object.keys(d).forEach(function(k){ $(k).value = d[k]; });
+    update();
+  }
+
+  function clearForm(){
+    TEXT.forEach(function(id){ $(id).value = ""; });
+    $("grade").value = "ششم"; $("goals").value = "۳"; $("q").value = "۳";
+    $("msg").textContent = "";
+    update();
+  }
+
+  function setMsg(t){ $("msg").textContent = t; }
+
+  function fallbackCopy(){
+    var o = $("out");
+    o.removeAttribute("readonly");
+    o.focus(); o.select();
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch(e){}
+    o.setAttribute("readonly", "");
+    setMsg(ok ? "پرامپت کپی شد." : "کپی نشد؛ متن را انتخاب و دستی کپی کنید.");
+  }
+
+  function copy(){
+    var text = $("out").value;
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ setMsg("پرامپت کپی شد."); }, fallbackCopy);
+    } else { fallbackCopy(); }
+  }
+
+  ALL.forEach(function(id){
+    $(id).addEventListener("input", update);
+    $(id).addEventListener("change", update);
+  });
+  $("btnSample").addEventListener("click", sample);
+  $("btnClear").addEventListener("click", clearForm);
+  $("btnCopy").addEventListener("click", copy);
+  update();
+
+  /* ---------- فعال‌سازی ---------- */
+  var SECRET = "EC-TarhDars-9X7K2Q"; /* همین مقدار باید در فایل ادمین هم یکسان باشد */
+  function cyrb53(str){
+    var h1=0xdeadbeef, h2=0x41c6ce57;
+    for (var i=0,ch; i<str.length; i++){ ch=str.charCodeAt(i); h1=Math.imul(h1^ch,2654435761); h2=Math.imul(h2^ch,1597334677); }
+    h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);
+    h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);
+    return 4294967296*(2097151&h2)+(h1>>>0);
+  }
+  function fmt(n){ var s=String(n%100000000); while(s.length<8) s="0"+s; return s.slice(0,4)+"-"+s.slice(4); }
+  function expected(dev){ return fmt(cyrb53(dev+"|"+SECRET)); }
+  function digits(t){
+    return String(t).replace(/[۰-۹]/g,function(d){return "۰۱۲۳۴۵۶۷۸۹".indexOf(d);})
+                    .replace(/[٠-٩]/g,function(d){return "٠١٢٣٤٥٦٧٨٩".indexOf(d);}).replace(/\D/g,"");
+  }
+  function sget(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  function sset(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  function deviceCode(){
+    var c = sget("tdr_dev");
+    if (!c || !/^\d{4}-\d{4}$/.test(c)){
+      var r = new Uint32Array(1);
+      (window.crypto||window.msCrypto).getRandomValues(r);
+      c = fmt(r[0] % 100000000);
+      sset("tdr_dev", c);
+    }
+    return c;
+  }
+  var DEV = deviceCode();
+
+  function openApp(){ $("gate").hidden = true; $("app").hidden = false; }
+  function gmsg(t, err){ var m=$("gmsg"); m.textContent=t; m.className = err ? "err" : ""; }
+
+  $("devCode").textContent = DEV;
+  $("btnDevCopy").addEventListener("click", function(){
+    var done = function(){ gmsg("کد دستگاه کپی شد؛ آن را برای ادمین بفرستید."); };
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(DEV).then(done, function(){ gmsg("کپی نشد؛ کد را دستی کپی کنید.", true); });
+    } else { gmsg("کپی نشد؛ کد را دستی کپی کنید.", true); }
+  });
+  $("btnShare").addEventListener("click", function(){
+    var text = "کد دستگاه برای فعال‌سازی پرامپت‌ساز طرح درس روزانه: " + DEV;
+    if (navigator.share){ navigator.share({text:text}).catch(function(){}); }
+    else { window.open("https://t.me/share/url?url=%20&text="+encodeURIComponent(text), "_blank"); }
+  });
+  $("btnAct").addEventListener("click", function(){
+    var typed = digits($("act").value);
+    var want = digits(expected(DEV));
+    if (typed === want){ sset("tdr_act", expected(DEV)); gmsg(""); openApp(); }
+    else { gmsg("کد فعال‌سازی درست نیست. دوباره بررسی کنید یا با ادمین تماس بگیرید.", true); }
+  });
+  $("act").addEventListener("keydown", function(e){ if (e.key==="Enter") $("btnAct").click(); });
+
+  if (sget("tdr_act") === expected(DEV)) openApp(); else $("gate").hidden = false;
+})();
+</script>
+</body>
+</html>
